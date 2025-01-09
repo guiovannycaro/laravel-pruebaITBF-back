@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use Illuminate\Support\Facades\DB;
+use App\Models\Hoteles;
+use App\Http\Controllers\HotelesController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+
+Route::get('/hoteles', [HotelesController::class, 'index']);
+Route::get('/hoteles/{hoteles}', [HotelesController::class, 'show']);
+Route::post('/hoteles', [HotelesController::class, 'store']);
+Route::put('/hoteles/{hoteles}', [HotelesController::class, 'update']);
+Route::delete('/hoteles/{hoteles}', [HotelesController::class, 'delete']);
+
