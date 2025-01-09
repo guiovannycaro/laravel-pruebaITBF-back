@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('acomodacion_tipohabitacion_hotels', function (Blueprint $table) {
-            $table->integer('idacom_tipohabhotel', true);
-            $table->integer('idhotel')->unsigned();
-            $table->integer('idacomodacion')->unsigned();
-            $table->integer('idtipoacomodacion')->unsigned();
+        Schema::create('usuarios', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
         });
     }
@@ -25,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('acomodacion_tipohabitacion_hotels');
+        Schema::dropIfExists('usuarios');
     }
 };
