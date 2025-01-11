@@ -27,7 +27,7 @@ public function store(Request $request)
     // Validate the incoming request data
     $validatedData = $request->validate([
         'nombre' => 'required|string|max:50',
-        'codnifrfc' => 'required|string|max:50|unique:hoteles', 
+        'codnifrfc' => 'required|string|max:50|unique:hoteles,codnifrfc', 
         'direccion' => 'required|string|max:100',
         'telefono' => 'required|string|max:20',
         'idciudad' => 'required|exists:ciudad,idciudad',
