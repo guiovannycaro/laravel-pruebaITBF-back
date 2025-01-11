@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Acomodaciontipohabitacionhoteleles;
+use App\Models\Acomodacion;
 
 class AcomodacionController extends Controller
 {
@@ -13,23 +13,7 @@ class AcomodacionController extends Controller
      */
     public function index()
     {
-        $resultados = DB::table('acomodacion_tipohabitacion_hotel')
-        ->join('hoteles', 'acomodacion_tipohabitacion_hotel.idhotel', '=', 'hoteles.idhotel')
-        ->join('tipohabitaciones', 'acomodacion_tipohabitacion_hotel.idtipoacomodacion', '=', 'tipohabitaciones.idtipohabitacion')
-        ->join('acomodacion', 'acomodacion_tipohabitacion_hotel.idacomodacion', '=', 'acomodacion.idacomodacion')
-        ->select(
-            'hoteles.nombre',
-            DB::raw('COUNT(tipohabitaciones.descripcion) AS CANTIDAD'),
-            'tipohabitaciones.descripcion AS TIPO_HABITACION',
-            'acomodacion.descripcion AS ACOMODACION'
-        )
-        ->groupBy('hoteles.nombre', 'tipohabitaciones.descripcion', 'acomodacion.descripcion')
-        ->orderBy('hoteles.nombre')
-        ->orderBy('tipohabitaciones.descripcion')
-        ->orderBy('acomodacion.descripcion')
-        ->get();
-
-    return response()->json($resultados);
+           return Acomodacion::all();
     }
 
     /**
@@ -42,7 +26,7 @@ class AcomodacionController extends Controller
      */
     public function store(Request $request)
     {
-        $acomodacion =  Acomodaciontipohabitacionhoteleles::create($request->all());
+        $acomodacion =  Acomodacion::create($request->all());
 
         return reponse()->json($acomodacion,201);
     }
@@ -50,26 +34,9 @@ class AcomodacionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($nombre)
+    public function show(Acomodacion $acomodacion)
     {
-        $resultados = DB::table('acomodacion_tipohabitacion_hotel')
-        ->join('hoteles', 'acomodacion_tipohabitacion_hotel.idhotel', '=', 'hoteles.idhotel')
-        ->join('tipohabitaciones', 'acomodacion_tipohabitacion_hotel.idtipoacomodacion', '=', 'tipohabitaciones.idtipohabitacion')
-        ->join('acomodacion', 'acomodacion_tipohabitacion_hotel.idacomodacion', '=', 'acomodacion.idacomodacion')
-        ->select(
-            'hoteles.nombre',
-            DB::raw('COUNT(tipohabitaciones.descripcion) AS CANTIDAD'),
-            'tipohabitaciones.descripcion AS TIPO_HABITACION',
-            'acomodacion.descripcion AS ACOMODACION'
-        )
-        ->where('hoteles.nombre', $nombre)
-        ->groupBy('hoteles.nombre', 'tipohabitaciones.descripcion', 'acomodacion.descripcion')
-        ->orderBy('hoteles.nombre')
-        ->orderBy('tipohabitaciones.descripcion')
-        ->orderBy('acomodacion.descripcion')
-        ->get();
-
-    return response()->json($resultados);
+       return response()->json($acomodacion, 200);
     }
 
     /**
@@ -79,7 +46,7 @@ class AcomodacionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,  Acomodaciontipohabitacionhoteleles $acomodacion)
+    public function update(Request $request,  Acomodacion $acomodacion)
     {
         $acomo->updated($request->all());
         return reponse()->json($acomo,201);
@@ -88,7 +55,7 @@ class AcomodacionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Acomodaciontipohabitacionhoteleles $acomodacion)
+    public function destroy(Acomodacion $acomodacion)
     {
         $acomo->delete();
         return reponse()->json($acomo,204);

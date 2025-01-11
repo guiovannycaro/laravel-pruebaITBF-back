@@ -67,6 +67,9 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'cors' => \App\Http\Middleware\Cors::class,
         'hoteles' => \App\Http\Middleware\HotelesMiddleware::class,
-        'acomodacion' => \App\Http\Middleware\AcomodacionMiddleware::class
+        'acomodacion' => \App\Http\Middleware\AcomodacionMiddleware::class,
+        'ciudad' => \App\Http\Middleware\CiudadMiddleware::class,
+        'tipohabitacion' => \App\Http\Middleware\TipoAcomodacionMiddleware::class,
+         'acomotiphabitacionhotel' => \App\Http\Middleware\AcomodaciontipohabitacionhotelelesMiddleware::class
     ];
 }
