@@ -35,9 +35,11 @@ Route::middleware(['ciudad'])->group(function () {
 Route::middleware(['hoteles'])->group(function () {
     Route::get('/hoteles', [HotelesController::class, 'index']);
     Route::get('/hoteles/{hoteles}', [HotelesController::class, 'show']);
+     Route::get('/hoteles/BoscarById/{hoteles}', [HotelesController::class, 'buscarById']);
     Route::post('/hoteles', [HotelesController::class, 'store']);
-    Route::put('/hoteles/{hoteles}', [HotelesController::class, 'update']);
+   Route::put('/hoteles/{hoteles}', [HotelesController::class, 'update']);
     Route::delete('/hoteles/{id}', [HotelesController::class, 'delete']);
+
     Route::get('/hoteles/obtenernumero/{nombre}', [HotelesController::class, 'obtenercuentahabitaciones']);
 });
 
@@ -62,8 +64,12 @@ Route::middleware(['acomotiphabitacionhotel'])->group(function () {
     Route::get('/acomotiphabitacionhotel', [AcomodaciontipohabitacionhotelelesController::class, 'index']);
     Route::get('/acomotiphabitacionhotel/{nombre}', [AcomodaciontipohabitacionhotelelesController::class, 'show']);
     Route::post('/acomotiphabitacionhotel', [AcomodaciontipohabitacionhotelelesController::class, 'store']);
-    Route::put('/acomotiphabitacionhotel/{acomodacion}', [AcomodaciontipohabitacionhotelelesController::class, 'update']);
-    Route::delete('/acomotiphabitacionhotel/{acomodacion}', [AcomodaciontipohabitacionhotelelesController::class, 'delete']);
+    Route::get('/acomotiphabitacionhotel/conteoAcomodacion/{idhotel}', [AcomodaciontipohabitacionhotelelesController::class, 'conteoAcomodaciones']);
+  
+
+
+
+
 });
 
 

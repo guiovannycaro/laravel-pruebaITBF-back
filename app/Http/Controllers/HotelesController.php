@@ -12,6 +12,16 @@ class HotelesController extends Controller
         return Hoteles::all();
     }
 
+        public function buscarById(int $id){
+
+        $hotel = DB::select('SELECT * FROM hoteles WHERE idhotel = ?', [$id]);
+         if ($hotel) {
+            return response()->json($hotel, 200);  // Return the hotel data if found
+        } else {
+            return response()->json(['message' => 'Hotel not found'], 404);  // Return an error if not found
+        };
+    }
+
     public function show(string $codnifrfc){
 
         $hotel = DB::select('SELECT * FROM hoteles WHERE codnifrfc = ?', [$codnifrfc]);
@@ -21,6 +31,8 @@ class HotelesController extends Controller
             return response()->json(['message' => 'Hotel not found'], 404);  // Return an error if not found
         };
     }
+
+
 
 public function store(Request $request)
 {
@@ -42,10 +54,10 @@ public function store(Request $request)
     return response()->json(['status' => 'success', 'hotel' => $hotel], 201);
 }
 
-    public function update(Request $request,Hoteles $hoteles){
+    public function update(Request $request, $idhotel){
 
-        $hotel->updated($request->all());
-        return reponse()->json($hotel,201);
+        $hotel = Hoteles::updated($request->all());
+       return response()->json(['status' => 'success', 'hotel' => $hotel], 201);
     }
 
  public function delete(int $id)
