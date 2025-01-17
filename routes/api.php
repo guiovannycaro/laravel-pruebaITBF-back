@@ -32,12 +32,15 @@ Route::middleware(['ciudad'])->group(function () {
 });
 
 
+
+ 
+
 Route::middleware(['hoteles'])->group(function () {
     Route::get('/hoteles', [HotelesController::class, 'index']);
     Route::get('/hoteles/{hoteles}', [HotelesController::class, 'show']);
      Route::get('/hoteles/BoscarById/{hoteles}', [HotelesController::class, 'buscarById']);
     Route::post('/hoteles', [HotelesController::class, 'store']);
-   Route::put('/hoteles/{hoteles}', [HotelesController::class, 'update']);
+  Route::put('/hoteles/ActualizarHotel/{hoteles}', [HotelesController::class, 'updateHoteles']);
     Route::delete('/hoteles/{id}', [HotelesController::class, 'delete']);
 
     Route::get('/hoteles/obtenernumero/{nombre}', [HotelesController::class, 'obtenercuentahabitaciones']);

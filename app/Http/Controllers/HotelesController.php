@@ -54,12 +54,50 @@ public function store(Request $request)
     return response()->json(['status' => 'success', 'hotel' => $hotel], 201);
 }
 
-    public function update(Request $request, $idhotel){
+public function updateHoteles(Request $request, $id)
+{
+    try {
+        // Validar los datos de la solicitud
+        $validated = $request->validate([
+            'idhotel' => 'required|integer',
+            'nombre' => 'required|string|max:255',
+            'codnifrfc' => 'required|string|max:20',
+            'direccion' => 'required|string',
+            'telefono' => 'required|string|max:15',
+            'idciudad' => 'required|integer',
+            'is_activo' => 'required|boolean',
+            'numhabitaciones' => 'required|integer',
+        ]);
 
-        $hotel = Hoteles::updated($request->all());
-       return response()->json(['status' => 'success', 'hotel' => $hotel], 201);
+        // Realizar la actualización con el Query Builder
+        $hotel = DB::table('hoteles')
+            ->where('idhotel', $id)
+            ->update([
+                'idhotel' => $validated['idhotel'],
+                'nombre' => $validated['nombre'],
+                'codnifrfc' => $validated['codnifrfc'],
+                'direccion' => $validated['direccion'],
+                'telefono' => $validated['telefono'],
+                'idciudad' => $validated['idciudad'],
+                'is_activo' => $validated['is_activo'],
+                'numhabitaciones' => $validated['numhabitaciones'],
+                'updated_at' => now(),  // Actualiza la fecha de actualización
+            ]);
+
+        // Comprobar si la actualización fue exitosa
+        if ($hotel) {
+            return response()->json(['status' => 'success', 'hotel' => $hotel], 201);
+        }
+
+         return response()->json(['status' => 'success', 'hotel' => $hotel], 201);
+    } catch (\Exception $e) {
+        // Registrar el error para depuración
+        \Log::error('Hotel update failed: ' . $e->getMessage());
+
+        // Retornar un error genérico
+        return response()->json(['status' => 'Internal Server Error'], 500);
     }
-
+}
  public function delete(int $id)
 {
     // Buscar el hotel por su ID
